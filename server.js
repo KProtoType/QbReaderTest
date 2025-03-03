@@ -77,29 +77,64 @@ app.get('/api/question', async (req, res) => {
       'User-Agent': 'Quiz Bowl Practice App'
     };
     
-    // Make the request to QB Reader API
-    const response = await axios.get(url, { headers });
+    // Make multiple attempts to try getting a matching category
+    const MAX_CATEGORY_ATTEMPTS = 2; // Limit to avoid rate limiting issues
+    let question = null;
+    let attempts = 0;
     
-    // Check if response is valid
-    if (!response.data || !response.data.tossups || !response.data.tossups.length) {
-      return res.status(500).json({ 
-        error: 'Invalid response from QB Reader API' 
-      });
+    while (attempts < MAX_CATEGORY_ATTEMPTS) {
+      attempts++;
+      
+      // Make the request to QB Reader API
+      const response = await axios.get(url, { headers });
+      
+      // Check if response is valid
+      if (!response.data || !response.data.tossups || !response.data.tossups.length) {
+        if (attempts === MAX_CATEGORY_ATTEMPTS) {
+          return res.status(500).json({ 
+            error: 'Invalid response from QB Reader API' 
+          });
+        }
+        console.log("Invalid response, retrying...");
+        continue;
+      }
+      
+      // Get the question
+      question = response.data.tossups[0];
+      
+      // Check if we've seen this question before in this session
+      if (askedQuestionIds.has(question._id)) {
+        if (attempts === MAX_CATEGORY_ATTEMPTS) {
+          return res.status(202).json({
+            retry: true,
+            message: 'Question already asked in this session, please try again'
+          });
+        }
+        console.log("Question already asked, retrying...");
+        continue;
+      }
+      
+      // If category was requested, check if it matches
+      if (category && question.category && 
+          CATEGORY_MAPPING[category] && 
+          question.category !== CATEGORY_MAPPING[category]) {
+        console.log(`Category mismatch: got ${question.category}, wanted ${CATEGORY_MAPPING[category]}`);
+        
+        // Try again if this isn't our last attempt
+        if (attempts < MAX_CATEGORY_ATTEMPTS) {
+          console.log(`Attempt ${attempts}/${MAX_CATEGORY_ATTEMPTS} - trying again for category match`);
+          continue;
+        }
+        
+        // Log that we're using a non-matching category on last attempt
+        console.log("Using non-matching category after multiple attempts");
+      }
+      
+      // If we get here, we're good to proceed with this question
+      break;
     }
     
-    // Get the question
-    const question = response.data.tossups[0];
-    
-    // Check if we've seen this question before in this session
-    if (askedQuestionIds.has(question._id)) {
-      // If we've seen it, try to get another question
-      return res.status(202).json({
-        retry: true,
-        message: 'Question already asked in this session, please try again'
-      });
-    }
-    
-    // Add question ID to asked questions
+    // Add question ID to asked questions 
     askedQuestionIds.add(question._id);
     
     // Log the category of the returned question
