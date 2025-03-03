@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Bowl Practice</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Quiz Bowl Practice</h1>
+      <div class="score-display">
+        <span>Score: </span>
+        <span id="score">0</span>
+      </div>
+    </header>
+
+    <div id="game-setup" class="section">
+      <h2>Game Settings</h2>
+      
+      <div class="settings-grid">
+        <div class="setting">
+          <label for="category-select">Category:</label>
+          <select id="category-select">
+            <option value="">All Categories</option>
+            <!-- Categories will be loaded from JS -->
+          </select>
+        </div>
+        
+        <div class="setting">
+          <label for="difficulty-select">Difficulty (1-5):</label>
+          <select id="difficulty-select">
+            <option value="">Any Difficulty</option>
+            <option value="1">1 (Easiest)</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5 (Hardest)</option>
+          </select>
+        </div>
+        
+        <div class="setting">
+          <label for="speed-slider">Reading Speed:</label>
+          <div class="slider-container">
+            <input type="range" id="speed-slider" min="0.5" max="2.0" step="0.1" value="1.0">
+            <span id="speed-value">1.0x</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="game-controls">
+        <button id="start-btn" class="primary-btn">Start Game</button>
+        <button id="stop-btn" class="secondary-btn" disabled>Stop Game</button>
+      </div>
+    </div>
+
+    <div id="game-area" class="section hidden">
+      <div class="status-indicator">
+        <div class="status-circle" id="status-indicator"></div>
+        <span id="status-text">Waiting</span>
+      </div>
+      
+      <div id="question-display"></div>
+      
+      <div class="game-controls">
+        <button id="buzz-btn" class="primary-btn" disabled>Buzz In</button>
+        <button id="continue-btn" class="secondary-btn" disabled>Continue</button>
+      </div>
+
+      <div class="answer-section hidden" id="answer-section">
+        <h3>Your Answer:</h3>
+        <div id="speech-input-display">(Listening...)</div>
+        <div class="microphone-indicator">
+          <i class="fas fa-microphone" id="mic-icon"></i>
+          <div class="mic-waves" id="mic-waves">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+          </div>
+        </div>
+        <div id="timer">5</div>
+      </div>
+    </div>
+
+    <div id="game-log" class="section">
+      <h2>Game Log</h2>
+      <div id="log-entries"></div>
+    </div>
+
+    <div id="error-notification" class="hidden">
+      <div class="error-content">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="error-message"></span>
+        <button id="error-close">×</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

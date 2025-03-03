@@ -1,0 +1,52 @@
+Create an interactive browser-based application on Replit to help students practice for Quiz Bowl competitions by fetching questions from the QB Reader API’s /api/random-tossup endpoint and using speech recognition to evaluate spoken answers.
+Core Functionality Requirements  
+Fetch quiz questions from https://www.qbreader.org/api/random-tossup using a Node.js server with axios.  
+
+Allow filtering questions with parameters: difficulty (1-5) and category (e.g., "science", "literature")—hardcode a list of categories like "science", "literature", "history" for now since /api/categories doesn’t work.  
+
+Implement text-to-speech to read questions aloud with adjustable speed using the browser’s SpeechSynthesis API.  
+
+Use browser speech recognition (Web Speech API) to capture and evaluate user answers.  
+
+Implement a scoring system: +10 points for correct answers, 0 for incorrect.  
+
+Track used question IDs (from the _id field in the JSON) in memory to avoid repetition within a session.
+Key Quiz Bowl Simulation Features  
+Add a "Buzz In" button to pause the text-to-speech reading (simulating a Quiz Bowl buzzer).  
+
+After an incorrect answer, show a "Continue" button to fetch the next question.  
+
+Enforce timing: 5 seconds to answer after the question finishes reading (start the timer after speech ends or buzzing).
+Technical Requirements  
+Handle API errors (e.g., if /api/random-tossup fails or returns non-JSON) by showing an error message and retrying.  
+
+Process HTML-formatted questions from the API’s question field (e.g., strip tags for speech, display raw HTML in UI).  
+
+Create a smart answer matcher: accept variations like "The Great Gatsby" vs "Great Gatsby" (ignore case, "the", etc.).  
+
+Store question history in memory (no database, just a session array of IDs).  
+
+Build a responsive UI that works on desktop and mobile screens.
+User Interface Components  
+Dropdown for category selection (hardcoded: "science", "literature", "history", etc.) and difficulty (1-5).  
+
+Slider for reading speed (e.g., 0.5x to 2x).  
+
+"Start Game" and "Stop Game" buttons.  
+
+"Buzz In" button (active during reading).  
+
+"Continue" button (appears after incorrect answers).  
+
+Visual indicators: "Reading", "Listening", or "Waiting" status.  
+
+Score display (e.g., "Score: 30").  
+
+Game log (e.g., "Question 1: Correct", "Question 2: Incorrect").
+External API Integration  
+Use GET https://www.qbreader.org/api/random-tossup with query params (e.g., ?difficulty=3&category=science).  
+
+Handle JSON response: { "tossups": [{ "_id": "string", "question": "HTML text", ... }] }.  
+
+Fetch one question at a time (ignore count for simplicity unless you want to expand later).
+
