@@ -126,7 +126,7 @@ function initSpeechSynthesis() {
       // Add all available voices as options
       voices.forEach((voice, index) => {
         const option = document.createElement('option');
-        option.value = index;
+        option.value = voice.voiceURI; // Store the voiceURI for consistency
         option.textContent = `${voice.name} (${voice.lang})`;
         
         // Mark English voices for easier selection
@@ -139,12 +139,13 @@ function initSpeechSynthesis() {
       
       // Add event listener for voice selection
       voiceSelect.addEventListener('change', (e) => {
-        const selectedIndex = e.target.value;
-        if (selectedIndex !== '') {
-          gameState.selectedVoice = voices[selectedIndex];
-          console.log('Selected voice:', gameState.selectedVoice.name);
+        const selectedVoiceUri = e.target.value;
+        if (selectedVoiceUri !== '') {
+          gameState.selectedVoice = voices.find(voice => voice.voiceURI === selectedVoiceUri);
+          console.log('Selected voice:', gameState.selectedVoice ? gameState.selectedVoice.name : 'Default');
         } else {
           gameState.selectedVoice = null;
+          console.log('Using default voice');
         }
       });
       
@@ -271,6 +272,28 @@ async function fetchQuestion() {
       if (data.subcategory) {
         console.log('Subcategory:', data.subcategory);
       }
+      
+      // If we requested a specific category but got something different,
+      // show a notification to the user
+      if (category) {
+        const requestedCategory = elements.categorySelect.options[elements.categorySelect.selectedIndex].text;
+        if (requestedCategory !== 'All Categories' && 
+            data.category.toLowerCase() !== requestedCategory.toLowerCase()) {
+          // Remove any previous category notes
+          const previousNotes = document.querySelectorAll('.note.dynamic-note');
+          previousNotes.forEach(note => note.remove());
+          
+          // Add a dynamic note
+          const categoryNote = document.createElement('p');
+          categoryNote.classList.add('note', 'dynamic-note');
+          categoryNote.textContent = `Note: Requested ${requestedCategory} but received ${data.category}.`;
+          
+          const settingsNote = document.querySelector('.settings-note');
+          if (settingsNote) {
+            settingsNote.appendChild(categoryNote);
+          }
+        }
+      }
     }
     
     // Display the question with HTML formatting
@@ -294,6 +317,16 @@ async function fetchQuestion() {
 function readQuestion() {
   // Cancel any previous speech
   window.speechSynthesis.cancel();
+  
+  // Check for voice changes and apply them immediately
+  if (elements.voiceSelect && elements.voiceSelect.value) {
+    const selectedVoiceUri = elements.voiceSelect.value;
+    if (selectedVoiceUri) {
+      const voices = window.speechSynthesis.getVoices();
+      gameState.selectedVoice = voices.find(voice => voice.voiceURI === selectedVoiceUri);
+      console.log('Voice set to:', gameState.selectedVoice ? gameState.selectedVoice.name : 'Default');
+    }
+  }
   
   // Create a new speech utterance
   gameState.utterance = new SpeechSynthesisUtterance(gameState.currentQuestion);
