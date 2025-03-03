@@ -107,16 +107,49 @@ app.get('/api/question', async (req, res) => {
       console.log(`Received question with category: ${question.category}`);
     }
     
-    // Add correct answer to the response
-    const sanitizedAnswer = question.answer_sanitized || question.answer;
+    // Extract and sanitize answer for better client-side matching
+    const sanitizedAnswer = question.answer_sanitized || question.answer || "";
     
-    // Return the question
+    // Also get question text without HTML for client-side processing
+    const plainQuestion = question.question_sanitized || question.question;
+    
+    // Check if we need to verify the category
+    const requestedCategory = req.query.category ? CATEGORY_MAPPING[req.query.category] : null;
+    console.log(`API response question: "${question.question.substring(0, 100)}..."`);
+    
+    // Log if category doesn't match what we requested
+    if (requestedCategory && question.category && question.category !== requestedCategory) {
+      console.log(`Warning: Requested ${requestedCategory} but received ${question.category}`);
+      console.log(`API may not support reliable category filtering`);
+    }
+    
+    // Attempt to extract the correct answer from the question text
+    let extractedAnswer = "";
+    
+    // Simple country check for geography-type questions
+    if (plainQuestion && plainQuestion.includes("what country")) {
+      const countries = [
+        "India", "China", "Japan", "United States", "Russia", "Brazil", 
+        "Australia", "Canada", "Germany", "France", "United Kingdom", 
+        "Italy", "Spain", "Mexico", "Egypt", "South Africa"
+      ];
+      
+      for (const country of countries) {
+        if (sanitizedAnswer.toLowerCase().includes(country.toLowerCase())) {
+          extractedAnswer = country;
+          break;
+        }
+      }
+    }
+    
+    // Return the enhanced question
     return res.json({
       id: question._id,
       question: question.question,
       category: question.category,
       subcategory: question.subcategory,
       answer: sanitizedAnswer,
+      extractedAnswer: extractedAnswer,
       // Format might vary, we'll handle any additional fields client-side
     });
     
