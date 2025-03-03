@@ -333,9 +333,24 @@ header h1 {
   }
 }
 
+/* Settings note styling */
+.settings-note {
+  margin: 15px 0;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 4px;
+}
+
+.note {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #666;
+}
+
 /* Utility classes */
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 /* Responsive adjustments */

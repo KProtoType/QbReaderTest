@@ -201,9 +201,19 @@ function initSpeechRecognition() {
 // Fetch a new question from the server
 async function fetchQuestion() {
   try {
-    // Get selected difficulty and category
+    // Get selected difficulty and category (can change during game)
     const difficulty = elements.difficultySelect.value;
     const category = elements.categorySelect.value;
+    
+    // Check for voice changes and apply them immediately
+    if (elements.voiceSelect && elements.voiceSelect.value) {
+      const selectedVoiceUri = elements.voiceSelect.value;
+      if (selectedVoiceUri) {
+        const voices = window.speechSynthesis.getVoices();
+        gameState.selectedVoice = voices.find(voice => voice.voiceURI === selectedVoiceUri);
+        console.log('Voice changed to:', gameState.selectedVoice ? gameState.selectedVoice.name : 'Default');
+      }
+    }
     
     // Build query parameters
     let url = '/api/question';
@@ -766,11 +776,16 @@ async function startGame() {
     console.error('Error resetting question history:', error);
   }
   
-  // Update UI
-  elements.gameSetup.classList.add('hidden');
+  // Update UI but keep settings section visible
   elements.gameArea.classList.remove('hidden');
   elements.startBtn.disabled = true;
   elements.stopBtn.disabled = false;
+  
+  // Add a note about category filtering 
+  const categoryNote = document.createElement('div');
+  categoryNote.classList.add('note');
+  categoryNote.innerHTML = 'Note: QB Reader API may not honor category filtering consistently.';
+  elements.gameSetup.appendChild(categoryNote);
   
   // Set game as active
   gameState.isGameActive = true;
@@ -794,9 +809,9 @@ function stopGame() {
   // Clear timers
   clearTimeout(gameState.answerTimer);
   
-  // Update UI
+  // Hide the game area but not the settings
+  // This allows users to still see and change settings
   elements.gameArea.classList.add('hidden');
-  elements.gameSetup.classList.remove('hidden');
   elements.startBtn.disabled = false;
   elements.stopBtn.disabled = true;
   
@@ -809,6 +824,10 @@ function stopGame() {
   gameState.isListening = false;
   
   updateStatus('waiting', 'Game stopped');
+  
+  // Remove any previous category notes when stopping
+  const previousNotes = document.querySelectorAll('.note.dynamic-note');
+  previousNotes.forEach(note => note.remove());
 }
 
 // Update the status indicator

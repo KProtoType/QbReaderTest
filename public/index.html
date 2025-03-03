@@ -42,12 +42,25 @@
         </div>
         
         <div class="setting">
+          <label for="voice-select">Voice:</label>
+          <select id="voice-select">
+            <option value="">Default Voice</option>
+            <!-- Voices will be loaded from JS -->
+          </select>
+        </div>
+        
+        <div class="setting">
           <label for="speed-slider">Reading Speed:</label>
           <div class="slider-container">
             <input type="range" id="speed-slider" min="0.5" max="2.0" step="0.1" value="1.0">
             <span id="speed-value">1.0x</span>
           </div>
         </div>
+      </div>
+      
+      <div class="settings-note">
+        <p class="note">Note: QB Reader API may not honor category filtering consistently.</p>
+        <p class="note">Settings can be changed at any time during gameplay.</p>
       </div>
       
       <div class="game-controls">
