@@ -104,10 +104,18 @@ function initSpeechSynthesis() {
     voices = window.speechSynthesis.getVoices();
     
     if (voices.length > 0) {
-      // Create voice selection dropdown
+      // Create voice selection UI
+      const voiceContainer = document.createElement('div');
+      voiceContainer.className = 'setting';
+      
+      // Create label
+      const voiceLabel = document.createElement('label');
+      voiceLabel.htmlFor = 'voice-select';
+      voiceLabel.textContent = 'Reader Voice:';
+      
+      // Create select element
       const voiceSelect = document.createElement('select');
       voiceSelect.id = 'voice-select';
-      voiceSelect.className = 'form-control';
       
       // Add default option
       const defaultOption = document.createElement('option');
@@ -140,20 +148,17 @@ function initSpeechSynthesis() {
         }
       });
       
-      // Create label for the voice select
-      const voiceLabel = document.createElement('label');
-      voiceLabel.htmlFor = 'voice-select';
-      voiceLabel.textContent = 'Reader Voice:';
-      
-      // Create container for voice selection
-      const voiceContainer = document.createElement('div');
-      voiceContainer.className = 'form-group';
+      // Assemble and insert into DOM
       voiceContainer.appendChild(voiceLabel);
       voiceContainer.appendChild(voiceSelect);
       
-      // Insert the voice selection UI before the Start Game button
-      const gameControls = document.querySelector('.game-controls');
-      gameControls.insertBefore(voiceContainer, elements.startBtn.parentNode);
+      // Find the settings grid to add our voice setting
+      const settingsGrid = document.querySelector('.settings-grid');
+      if (settingsGrid) {
+        settingsGrid.appendChild(voiceContainer);
+      } else {
+        console.error('Could not find settings-grid element to add voice selection');
+      }
     }
   };
   
@@ -229,10 +234,24 @@ async function fetchQuestion() {
       throw new Error(data.error || 'Failed to fetch a question');
     }
     
-    // Store the question
+    // Store the question and additional data
     gameState.currentQuestion = stripHTML(data.question);
     gameState.currentQuestionHTML = data.question;
     gameState.currentQuestionId = data.id;
+    
+    // Store the correct answer if provided by the server
+    if (data.answer) {
+      gameState.lastCorrectAnswer = stripHTML(data.answer);
+      console.log('Correct answer from server:', gameState.lastCorrectAnswer);
+    }
+    
+    // Log category info for debugging
+    if (data.category) {
+      console.log('Question category:', data.category);
+      if (data.subcategory) {
+        console.log('Subcategory:', data.subcategory);
+      }
+    }
     
     // Display the question with HTML formatting
     elements.questionDisplay.innerHTML = gameState.currentQuestionHTML;

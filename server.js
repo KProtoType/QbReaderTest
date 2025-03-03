@@ -21,12 +21,28 @@ app.use(express.json());
 // Store asked question IDs to avoid repetition
 const askedQuestionIds = new Set();
 
-// Available categories (hardcoded since QB Reader API doesn't provide JSON)
+// Available categories and their mapping to the API's categories
+// The API appears to use a different categorization than what we initially thought
 const CATEGORIES = [
   'literature', 'history', 'science', 'fine-arts', 'religion',
   'mythology', 'philosophy', 'social-science', 'current-events',
   'geography', 'other'
 ];
+
+// Updated mapping based on actual API responses
+const CATEGORY_MAPPING = {
+  'literature': 'Literature',
+  'history': 'History',
+  'science': 'Science',
+  'fine-arts': 'Fine Arts',
+  'religion': 'Religion',
+  'mythology': 'Mythology',
+  'philosophy': 'Philosophy',
+  'social-science': 'Social Science',
+  'current-events': 'Current Events',
+  'geography': 'Geography',
+  'other': 'Other'
+};
 
 // Endpoint to fetch a random tossup question
 app.get('/api/question', async (req, res) => {
@@ -43,7 +59,12 @@ app.get('/api/question', async (req, res) => {
     }
     
     if (category && CATEGORIES.includes(category)) {
-      params.push(`category=${category}`);
+      // Use the mapped category format if available, otherwise use the original
+      const mappedCategory = CATEGORY_MAPPING[category] || category;
+      params.push(`category=${mappedCategory}`);
+      
+      // Log what we're sending to the API for debugging
+      console.log(`Requesting category: ${mappedCategory} (from ${category})`);
     }
     
     if (params.length > 0) {
@@ -81,10 +102,21 @@ app.get('/api/question', async (req, res) => {
     // Add question ID to asked questions
     askedQuestionIds.add(question._id);
     
+    // Log the category of the returned question
+    if (question.category) {
+      console.log(`Received question with category: ${question.category}`);
+    }
+    
+    // Add correct answer to the response
+    const sanitizedAnswer = question.answer_sanitized || question.answer;
+    
     // Return the question
     return res.json({
       id: question._id,
       question: question.question,
+      category: question.category,
+      subcategory: question.subcategory,
+      answer: sanitizedAnswer,
       // Format might vary, we'll handle any additional fields client-side
     });
     
