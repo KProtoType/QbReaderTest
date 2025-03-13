@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Bowl Practice - Installation Guide</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #2ecc71;
+            --background-color: #ecf0f1;
+            --text-color: #34495e;
+            --light-text: #95a5a6;
+            --border-color: #ddd;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+        
+        .instructions {
+            padding: 40px;
+        }
+        
+        .step {
+            margin-bottom: 40px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .step:last-child {
+            margin-bottom: 0;
+        }
+        
+        .step-header {
+            display: flex;
+            align-items: center;
+            background-color: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .step-number {
+            background-color: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .step-title {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .step-content {
+            padding: 20px;
+        }
+        
+        .step-description {
+            margin-bottom: 20px;
+        }
+        
+        .step-image {
+            background-color: #f8f9fa;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-style: italic;
+            color: var(--light-text);
+        }
+        
+        .step-instructions {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            border-radius: 4px;
+        }
+        
+        .step-instructions h4 {
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+        
+        .step-instructions ol, .step-instructions ul {
+            margin-left: 20px;
+        }
+        
+        .step-instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .code-block {
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: monospace;
+            padding: 10px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        
+        .tip {
+            background-color: rgba(46, 204, 113, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+        
+        .tip h4 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+        
+        .warning {
+            background-color: rgba(231, 76, 60, 0.1);
+            border-left: 4px solid #e74c3c;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+        
+        .warning h4 {
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+        
+        .back-link {
+            display: block;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .back-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            .instructions {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Quiz Bowl Practice App</h1>
+            <p class="subtitle">Step-by-Step Installation Guide</p>
+        </header>
