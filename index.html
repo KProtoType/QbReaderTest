@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Bowl Practice App</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #2ecc71;
+            --background-color: #ecf0f1;
+            --text-color: #34495e;
+            --light-text: #95a5a6;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 60px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(135deg, rgba(44, 62, 80, 0.9), rgba(52, 152, 219, 0.9));
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(46, 204, 113, 0.4);
+        }
+        
+        .features {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--secondary-color);
+            font-size: 2.2rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+        
+        .feature-description {
+            color: var(--light-text);
+            font-size: 1.1rem;
+        }
+        
+        .how-it-works {
+            padding: 80px 0;
+            background-color: var(--background-color);
+        }
+        
+        .steps {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .step:last-child {
+            margin-bottom: 0;
+        }
+        
+        .step-number {
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-right: 30px;
+            z-index: 2;
+        }
+        
+        .step-content {
+            padding-top: 5px;
+        }
+        
+        .step-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+        
+        .step-description {
+            color: var(--text-color);
+            font-size: 1.1rem;
+        }
+        
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 25px;
+            top: 50px;
+            width: 2px;
+            height: calc(100% + 10px);
+            background-color: var(--primary-color);
+            opacity: 0.3;
+        }
+        
+        .documentation {
+            padding: 80px 0;
+            background-color: white;
+            text-align: center;
+        }
+        
+        .doc-cards {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        
+        .doc-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            width: 300px;
+            text-align: left;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .doc-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .doc-title i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .doc-description {
+            margin-bottom: 20px;
+            color: var(--light-text);
+        }
+        
+        .doc-link {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .doc-link:hover {
+            background-color: #2980b9;
+        }
+        
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            margin-top: 20px;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .step {
+                flex-direction: column;
+            }
+            
+            .step-number {
+                margin-bottom: 15px;
+                margin-right: 0;
+            }
+            
+            .step:not(:last-child)::after {
+                display: none;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <div class="container">
+            <div class="header-content">
+                <h1>Quiz Bowl Practice App</h1>
+                <p class="tagline">Improve your Quiz Bowl skills with interactive practice, voice questions, and speech recognition</p>
+                <a href="https://github.com/KProtoType/QbReaderTest/archive/refs/heads/main.zip" class="cta-button">Download Now</a>
+            </div>
+        </div>
+    </header>
+    
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <h3 class="feature-title">Speech Recognition</h3>
+                    <p class="feature-description">Answer questions by speaking, just like in a real competition. The app evaluates your spoken responses.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-volume-up"></i>
+                    </div>
+                    <h3 class="feature-title">Text-to-Speech</h3>
+                    <p class="feature-description">Questions are read aloud at your preferred speed, simulating a real Quiz Bowl moderator.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3 class="feature-title">Buzz-In System</h3>
+                    <p class="feature-description">Interrupt the question when you know the answer, just like using a buzzer in competition.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h3 class="feature-title">Category Filters</h3>
+                    <p class="feature-description">Practice specific subjects like Literature, Science, History, Fine Arts, and more.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3 class="feature-title">Scoring System</h3>
+                    <p class="feature-description">Track your progress with automatic scoring and see your improvement over time.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3 class="feature-title">Game Log</h3>
+                    <p class="feature-description">Review your performance with a detailed game log that shows correct and incorrect answers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Choose Your Settings</h3>
+                        <p class="step-description">Select a category, difficulty level, and adjust the reading speed to match your preferences. You can also choose from available voice options.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Start Practicing</h3>
+                        <p class="step-description">Click "Start Game" and listen to the question being read aloud. The app fetches real Quiz Bowl questions from a database of competition questions.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Buzz In When Ready</h3>
+                        <p class="step-description">When you know the answer, click the "Buzz In" button to interrupt the question, just like in a real competition. This tests your ability to answer early with fewer clues.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Speak Your Answer</h3>
+                        <p class="step-description">After buzzing in, speak your answer clearly. The app uses speech recognition to capture and evaluate your response.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Review and Continue</h3>
+                        <p class="step-description">See if your answer was correct, review the correct answer if needed, and continue to the next question. Your score updates automatically.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="documentation">
+        <div class="container">
+            <h2 class="section-title">Documentation</h2>
+            <p>Learn how to install, set up, and get the most out of your Quiz Bowl Practice App</p>
+            
+            <div class="doc-cards">
+                <div class="doc-card">
+                    <h3 class="doc-title"><i class="fas fa-download"></i>Installation Guide</h3>
+                    <p class="doc-description">Step-by-step instructions to download, install, and run the Quiz Bowl Practice App on your computer.</p>
+                    <a href="installation-guide.html" class="doc-link">View Guide</a>
+                </div>
+                
+                <div class="doc-card">
+                    <h3 class="doc-title"><i class="fas fa-book"></i>User Guide</h3>
+                    <p class="doc-description">Comprehensive documentation on how to use all features of the app, plus tips and troubleshooting.</p>
+                    <a href="user-guide.html" class="doc-link">View Guide</a>
+                </div>
+                
+                <div class="doc-card">
+                    <h3 class="doc-title"><i class="fab fa-github"></i>GitHub Repository</h3>
+                    <p class="doc-description">Access the complete source code, contribute improvements, or report issues on GitHub.</p>
+                    <a href="https://github.com/KProtoType/QbReaderTest" class="doc-link">View Code</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>Quiz Bowl Practice App - Improve your knowledge and competition skills</p>
+            <div class="footer-links">
+                <a href="https://github.com/KProtoType/QbReaderTest">GitHub Repository</a>
+                <a href="https://github.com/KProtoType/QbReaderTest/issues">Report Issues</a>
+                <a href="https://www.qbreader.org/">QB Reader</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
