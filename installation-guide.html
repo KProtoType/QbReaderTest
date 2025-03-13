@@ -207,3 +207,188 @@
             <h1>Quiz Bowl Practice App</h1>
             <p class="subtitle">Step-by-Step Installation Guide</p>
         </header>
+        
+        <div class="instructions">
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <h2 class="step-title">Download the Code</h2>
+                </div>
+                <div class="step-content">
+                    <p class="step-description">First, you'll need to download the Quiz Bowl Practice App code to your computer.</p>
+                    
+                    <div class="step-image">
+                        [Image showing GitHub download button and ZIP download process]
+                    </div>
+                    
+                    <div class="step-instructions">
+                        <h4>Option A: Download ZIP File (Recommended for Beginners)</h4>
+                        <ol>
+                            <li>Go to the <a href="https://github.com/KProtoType/QbReaderTest" target="_blank">GitHub repository</a></li>
+                            <li>Click the green "Code" button near the top of the page</li>
+                            <li>Select "Download ZIP" from the dropdown menu</li>
+                            <li>Save the ZIP file to your computer</li>
+                            <li>Extract the ZIP file to a location you can easily find (like your Documents folder)</li>
+                        </ol>
+                        
+                        <h4>Option B: Clone with Git (For GitHub Users)</h4>
+                        <p>If you're familiar with Git, you can clone the repository using this command:</p>
+                        <div class="code-block">git clone https://github.com/KProtoType/QbReaderTest.git</div>
+                    </div>
+                    
+                    <div class="tip">
+                        <h4>Tip</h4>
+                        <p>Make note of where you saved or extracted the files. You'll need to navigate to this location in the next step.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <h2 class="step-title">Install Node.js</h2>
+                </div>
+                <div class="step-content">
+                    <p class="step-description">The Quiz Bowl Practice App requires Node.js to run. If you don't already have it installed, you'll need to download and install it first.</p>
+                    
+                    <div class="step-image">
+                        [Image showing Node.js download page]
+                    </div>
+                    
+                    <div class="step-instructions">
+                        <h4>Download and Install Node.js</h4>
+                        <ol>
+                            <li>Go to the <a href="https://nodejs.org/" target="_blank">Node.js website</a></li>
+                            <li>Download the "LTS" (Long Term Support) version for your operating system</li>
+                            <li>Run the installer and follow the installation prompts</li>
+                            <li>Accept the default settings if you're unsure</li>
+                        </ol>
+                        
+                        <h4>Verify Installation</h4>
+                        <p>To verify Node.js installed correctly, open a command prompt or terminal and type:</p>
+                        <div class="code-block">node --version</div>
+                        <p>You should see a version number (e.g., v16.14.0) if the installation was successful.</p>
+                    </div>
+                    
+                    <div class="warning">
+                        <h4>Important!</h4>
+                        <p>You need Node.js version 14 or higher for the app to work properly.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <h2 class="step-title">Install Required Packages</h2>
+                </div>
+                <div class="step-content">
+                    <p class="step-description">Now you need to install the required packages that the app depends on.</p>
+                    
+                    <div class="step-image">
+                        [Image showing terminal with npm install command]
+                    </div>
+                    
+                    <div class="step-instructions">
+                        <h4>Open a Terminal/Command Prompt</h4>
+                        <ol>
+                            <li>Open a terminal (Mac/Linux) or command prompt (Windows)</li>
+                            <li>Navigate to the folder where you extracted or cloned the Quiz Bowl files using the <code>cd</code> command:</li>
+                        </ol>
+                        <div class="code-block">cd path/to/QbReaderTest</div>
+                        
+                        <h4>Install Dependencies</h4>
+                        <p>Once you're in the correct folder, run the following command:</p>
+                        <div class="code-block">npm install</div>
+                        <p>This will download and install all the required packages. It might take a minute or two to complete.</p>
+                    </div>
+                    
+                    <div class="tip">
+                        <h4>Tip: Finding Your Path</h4>
+                        <p>On Windows, you can copy the file path by navigating to the folder in File Explorer, clicking in the address bar, and copying the text.</p>
+                        <p>On Mac, you can drag the folder onto the Terminal window to automatically insert its path.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <h2 class="step-title">Start the Server</h2>
+                </div>
+                <div class="step-content">
+                    <p class="step-description">Now you're ready to start the Quiz Bowl Practice App server!</p>
+                    
+                    <div class="step-image">
+                        [Image showing terminal with server running]
+                    </div>
+                    
+                    <div class="step-instructions">
+                        <h4>Start the Application</h4>
+                        <p>In the same terminal or command prompt window (make sure you're still in the QbReaderTest folder), run:</p>
+                        <div class="code-block">node server.js</div>
+                        
+                        <p>You should see a message that says:</p>
+                        <div class="code-block">Quiz Bowl Practice Server running on port 5000</div>
+                        
+                        <p>This means the server is running successfully!</p>
+                        
+                        <h4>Keep the Terminal Open</h4>
+                        <p>Important: Keep this terminal window open while you're using the app. If you close it, the app will stop running.</p>
+                    </div>
+                    
+                    <div class="warning">
+                        <h4>Troubleshooting</h4>
+                        <p>If you see an error message like "port 5000 is already in use", it means another program is already using that port. You can either:</p>
+                        <ul>
+                            <li>Close the other program, or</li>
+                            <li>Edit the server.js file to use a different port (look for "PORT" near the top of the file)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">5</div>
+                    <h2 class="step-title">Open the Application</h2>
+                </div>
+                <div class="step-content">
+                    <p class="step-description">Now that the server is running, you can open the Quiz Bowl Practice App in your web browser.</p>
+                    
+                    <div class="step-image">
+                        [Image showing the app running in a web browser]
+                    </div>
+                    
+                    <div class="step-instructions">
+                        <h4>Access the App</h4>
+                        <ol>
+                            <li>Open your web browser (Google Chrome is recommended for best speech recognition)</li>
+                            <li>Enter the following address in the address bar:</li>
+                        </ol>
+                        <div class="code-block">http://localhost:5000</div>
+                        
+                        <p>The Quiz Bowl Practice App should now load in your browser!</p>
+                        
+                        <h4>Grant Microphone Permissions</h4>
+                        <p>When you start the game, your browser will ask for permission to use your microphone. You must allow this for the speech recognition to work.</p>
+                    </div>
+                    
+                    <div class="tip">
+                        <h4>Tip: Sharing with Others</h4>
+                        <p>To make the app available to others on your local network:</p>
+                        <ol>
+                            <li>Find your computer's IP address</li>
+                            <li>Others can access your app at http://YOUR_IP_ADDRESS:5000</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="back-link">
+                <a href="index.html">← Back to Homepage</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
